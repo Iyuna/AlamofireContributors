@@ -10,10 +10,10 @@ import UIKit
 
 class ContributorsTableViewController: UITableViewController {
 
+    private var contributors = [Contributor]()
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
     }
-
 }
 

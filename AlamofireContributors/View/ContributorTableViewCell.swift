@@ -6,7 +6,7 @@
 //  Copyright © 2017 Iryna Vasylieva. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 class ContributorTableViewCell: UITableViewCell {
 
