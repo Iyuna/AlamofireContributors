@@ -17,5 +17,4 @@ enum ApiKeys {
     static let location = "location"
     static let login = "login"
     static let name = "name"
-    static let url = "url"
 }
