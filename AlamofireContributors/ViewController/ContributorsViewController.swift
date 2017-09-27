@@ -10,6 +10,10 @@ import UIKit
 
 class ContributorsViewController: UIViewController {
 
+    private enum Constants {
+        static let rowHeight = CGFloat(61)
+    }
+
     @IBOutlet private var tableView: UITableView!
     @IBOutlet private var activityIndicatorView: UIActivityIndicatorView!
     @IBOutlet private var emptyTableLabel: UILabel!
@@ -42,7 +46,10 @@ class ContributorsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        tableView.rowHeight = 61
+        title = "ContributorsTitle".localized
+        emptyTableLabel.text = "ContributorsEmptyList".localized
+            
+        tableView.rowHeight = Constants.rowHeight
 
         state = .loading
         NetworkService().fetchContributors {

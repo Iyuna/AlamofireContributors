@@ -19,12 +19,12 @@ struct Contributor {
 
 extension Contributor: JSONInitable {
     init?(json: [String: Any]) {
-        guard let id = json["id"] as? Int,
-            let login = json["login"] as? String,
-            let avatarURLString = json["avatar_url"] as? String,
+        guard let id = json[ApiKeys.id] as? Int,
+            let login = json[ApiKeys.login] as? String,
+            let avatarURLString = json[ApiKeys.avatarURL] as? String,
             let avatarURL = URL(string: avatarURLString),
-            let contributionsNumber = json["contributions"] as? Int,
-            let detailsURLString = json["url"] as? String,
+            let contributionsNumber = json[ApiKeys.contributions] as? Int,
+            let detailsURLString = json[ApiKeys.url] as? String,
             let detailsURL = URL(string: detailsURLString) else {
             return nil
         }

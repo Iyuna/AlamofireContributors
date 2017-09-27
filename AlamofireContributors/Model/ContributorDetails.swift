@@ -17,9 +17,9 @@ struct ContributorDetails {
 
 extension ContributorDetails: JSONInitable {
     init?(json: [String: Any]) {
-        name = json["name"] as? String
-        company = json["company"] as? String
-        blog = json["blog"] as? String
-        location = json["location"] as? String
+        name = json[ApiKeys.name] as? String
+        company = json[ApiKeys.company] as? String
+        blog = json[ApiKeys.blog] as? String
+        location = json[ApiKeys.location] as? String
     }
 }

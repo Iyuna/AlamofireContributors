@@ -12,3 +12,7 @@
 "ErrorUnknown" = "Unknown error";
 "ErrorTitle" = "Error";
 "ErrorOkButton" = "Ok";
+
+// Contributors screen
+"ContributorsTitle" = "Alamofire contributors";
+"ContributorsEmptyList" = "No contributors";

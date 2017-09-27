@@ -21,25 +21,30 @@ enum ServiceError: Error {
 
     var localizedDescription: String {
         switch self {
-        case .badPayload:   return localizedString("ErrorBadPayload")
-        case .parse:        return localizedString("ErrorParse")
+        case .badPayload:   return "ErrorBadPayload".localized
+        case .parse:        return "ErrorParse".localized
         }
     }
 }
 
 /// A service that sends and retrieves requests
 class NetworkService {
+    private enum Constants {
+        static let baseURL = "https://api.github.com"
+        static let contributorsSubpath = "repos/Alamofire/Alamofire/contributors"
+        static let usersSubpath = "users"
+    }
     private enum Request {
         case fetchContributors
         case fetchContributorDetails(Contributor)
 
-        var baseURL: URL { return URL(string: "https://api.github.com")! }
+        var baseURL: URL { return URL(string: Constants.baseURL)! }
         var requestSubpath: String {
             switch self {
             case .fetchContributors:
-                return "repos/Alamofire/Alamofire/contributors"
+                return Constants.contributorsSubpath
             case .fetchContributorDetails(let contributor):
-                return URL(string: "users")!.appendingPathComponent(contributor.login).absoluteString
+                return "\(Constants.usersSubpath)/\(contributor.login)"
             }
         }
         var requestPath: String {
