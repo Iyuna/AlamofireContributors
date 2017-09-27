@@ -6,6 +6,7 @@ inhibit_all_warnings!
 
 target 'AlamofireContributors' do
 pod 'Alamofire'
+pod 'AlamofireImage'
 end
 
 target 'AlamofireContributorsTests' do
