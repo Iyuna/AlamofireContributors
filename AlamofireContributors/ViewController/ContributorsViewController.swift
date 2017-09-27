@@ -14,20 +14,20 @@ class ContributorsViewController: UIViewController {
         static let rowHeight = CGFloat(61)
     }
 
-    @IBOutlet private var tableView: UITableView!
+    @IBOutlet var tableView: UITableView!
+    @IBOutlet var emptyTableLabel: UILabel!
     @IBOutlet private var activityIndicatorView: UIActivityIndicatorView!
-    @IBOutlet private var emptyTableLabel: UILabel!
 
-    private var networkService: AlamofireContributorsAPI = {
+    var networkService: AlamofireContributorsAPI = {
         return NetworkService()
     }()
 
-    private enum TableState {
+    enum TableState {
         case loading
         case failed(Error)
         case items([Contributor])
     }
-    private var state = TableState.loading {
+    var state = TableState.loading {
         didSet {
             switch state {
             case .loading:
@@ -54,15 +54,7 @@ class ContributorsViewController: UIViewController {
             
         tableView.rowHeight = Constants.rowHeight
 
-        state = .loading
-        self.networkService.fetchContributors {
-            [weak self] result in
-            guard self != nil else { return }
-            switch result {
-            case .failure(let error):           self!.state = .failed(error)
-            case .success(let contributors):    self!.state = .items(contributors)
-            }
-        }
+        loadData()
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -71,6 +63,18 @@ class ContributorsViewController: UIViewController {
             detailsViewController.contributor = contributors[tableView.indexPathForSelectedRow!.row]
         default:
             super.prepare(for: segue, sender: sender)
+        }
+    }
+
+    func loadData() {
+        state = .loading
+        self.networkService.fetchContributors {
+            [weak self] result in
+            guard self != nil else { return }
+            switch result {
+            case .failure(let error):           self!.state = .failed(error)
+            case .success(let contributors):    self!.state = .items(contributors)
+            }
         }
     }
 }

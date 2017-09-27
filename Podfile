@@ -10,6 +10,6 @@ pod 'AlamofireImage'
 end
 
 target 'AlamofireContributorsTests' do
-
+pod 'Alamofire'
 end
 

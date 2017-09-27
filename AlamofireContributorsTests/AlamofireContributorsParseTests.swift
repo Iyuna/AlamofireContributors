@@ -1,5 +1,5 @@
 //
-//  AlamofireContributorsTests.swift
+//  AlamofireContributorsParseTests.swift
 //  AlamofireContributorsTests
 //
 //  Created by Iryna Vasylieva on 9/26/17.
@@ -9,7 +9,7 @@
 import XCTest
 @testable import AlamofireContributors
 
-class AlamofireContributorsTests: XCTestCase {
+class AlamofireContributorsParseTests: XCTestCase {
     
     func testContributorParsing() {
         let testPayload: [String: Any] = [
