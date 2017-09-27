@@ -18,6 +18,10 @@ class ContributorsViewController: UIViewController {
     @IBOutlet private var activityIndicatorView: UIActivityIndicatorView!
     @IBOutlet private var emptyTableLabel: UILabel!
 
+    private var networkService: AlamofireContributorsAPI = {
+        return NetworkService()
+    }()
+
     private enum TableState {
         case loading
         case failed(Error)
@@ -31,8 +35,7 @@ class ContributorsViewController: UIViewController {
                 activityIndicatorView.startAnimating()
             case .failed(let error):
                 activityIndicatorView.stopAnimating()
-                let errorAlert = UIAlertController(error: error)
-                present(errorAlert, animated: true)
+                present(UIAlertController(error: error), animated: true)
             case .items(let contributors):
                 activityIndicatorView.stopAnimating()
                 let isEmpty = contributors.count == 0
@@ -52,12 +55,22 @@ class ContributorsViewController: UIViewController {
         tableView.rowHeight = Constants.rowHeight
 
         state = .loading
-        NetworkService().fetchContributors {
-            result in
+        self.networkService.fetchContributors {
+            [weak self] result in
+            guard self != nil else { return }
             switch result {
-            case .failure(let error):           self.state = .failed(error)
-            case .success(let contributors):    self.state = .items(contributors)
+            case .failure(let error):           self!.state = .failed(error)
+            case .success(let contributors):    self!.state = .items(contributors)
             }
+        }
+    }
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        switch (state, segue.destination) {
+        case (.items(let contributors), let detailsViewController as ContributorDetailsViewController):
+            detailsViewController.contributor = contributors[tableView.indexPathForSelectedRow!.row]
+        default:
+            super.prepare(for: segue, sender: sender)
         }
     }
 }
@@ -81,4 +94,7 @@ extension ContributorsViewController: UITableViewDataSource {
 
 // MARK: - UITableViewDelegate
 extension ContributorsViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
 }

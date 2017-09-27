@@ -14,11 +14,9 @@ extension UIAlertController {
     switch error {
     case let serviceError as ServiceError:  errorMessage = serviceError.localizedDescription
     case .some(let error):                  errorMessage = error.localizedDescription
-    case .none:                             errorMessage = localizedString("ErrorUnknown")
+    case .none:                             errorMessage = "ErrorUnknown".localized
     }
-    self.init(title: localizedString("ErrorTitle"), message: errorMessage, preferredStyle: .alert)
-
-    let okAction = UIAlertAction(title: localizedString("ErrorOkButton"), style: .cancel)
-    addAction(okAction)
+    self.init(title: "ErrorTitle".localized, message: errorMessage, preferredStyle: .alert)
+    addAction(UIAlertAction(title: "ErrorOkButton".localized, style: .cancel))
   }
 }

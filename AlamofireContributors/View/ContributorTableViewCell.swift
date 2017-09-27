@@ -32,7 +32,7 @@ class ContributorTableViewCell: UITableViewCell {
     func configure(with contributor: Contributor) {
         avatarImageView.af_setImage(withURL: contributor.avatarURL)
         loginLabel.text = contributor.login
-        contributionsNumberLabel.text = String.localizedStringWithFormat(localizedString("%ld contribution(s)"),
+        contributionsNumberLabel.text = String.localizedStringWithFormat("%ld contribution(s)".localized,
                                                                          contributor.contributionsNumber)
     }
 }

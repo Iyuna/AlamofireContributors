@@ -16,3 +16,7 @@
 // Contributors screen
 "ContributorsTitle" = "Alamofire contributors";
 "ContributorsEmptyList" = "No contributors";
+
+// Contributor details screen
+"ContributorsDetailsTitle" = "Details";
+"ContributorsDetailsBlog" = "Blog";
