@@ -10,7 +10,7 @@ import Alamofire
 
 // MARK: - API Protocol
 protocol AlamofireContributorsAPI {
-    func fetchContributor(completion: @escaping ((_ result: Result<[Contributor]>) -> Void))
+    func fetchContributors(completion: @escaping ((_ result: Result<[Contributor]>) -> Void))
     func fetchContributorDetails(for: Contributor,
                                  completion: @escaping ((_ result: Result<ContributorDetails>) -> Void))
 }
@@ -18,18 +18,25 @@ protocol AlamofireContributorsAPI {
 enum ServiceError: Error {
     case badPayload
     case parse
+
+    var localizedDescription: String {
+        switch self {
+        case .badPayload:   return localizedString("ErrorBadPayload")
+        case .parse:        return localizedString("ErrorParse")
+        }
+    }
 }
 
 /// A service that sends and retrieves requests
 class NetworkService {
     private enum Request {
-        case fetchContributor
+        case fetchContributors
         case fetchContributorDetails(Contributor)
 
         var baseURL: URL { return URL(string: "https://api.github.com")! }
         var requestSubpath: String {
             switch self {
-            case .fetchContributor:
+            case .fetchContributors:
                 return "repos/Alamofire/Alamofire/contributors"
             case .fetchContributorDetails(let contributor):
                 return URL(string: "users")!.appendingPathComponent(contributor.login).absoluteString
@@ -45,15 +52,15 @@ class NetworkService {
 }
 
 extension NetworkService: AlamofireContributorsAPI {
-    func fetchContributor(completion: @escaping ((Result<[Contributor]>) -> Void)) {
-        Request.fetchContributor.alamofireRequest.responseJSON {
+    func fetchContributors(completion: @escaping ((Result<[Contributor]>) -> Void)) {
+        Request.fetchContributors.alamofireRequest.responseJSON {
             completion(self.parseJSONResponse($0))
         }
     }
 
-    func fetchContributorDetails(for: Contributor,
+    func fetchContributorDetails(for contributor: Contributor,
                                  completion: @escaping ((_ result: Result<ContributorDetails>) -> Void)) {
-        Request.fetchContributor.alamofireRequest.responseJSON {
+        Request.fetchContributorDetails(contributor).alamofireRequest.responseJSON {
             completion(self.parseJSONResponse($0))
         }
     }

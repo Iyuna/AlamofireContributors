@@ -14,6 +14,11 @@ class ContributorsTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        NetworkService().fetchContributors {
+            contributors in
+            self.contributors = contributors.value ?? []
+        }
     }
 }
 

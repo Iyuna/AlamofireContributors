@@ -1,0 +1,14 @@
+/* 
+  Localized.strings
+  AlamofireContributors
+
+  Created by Iryna Vasylieva on 9/27/17.
+  Copyright © 2017 Iryna Vasylieva. All rights reserved.
+*/
+
+// Errors processing
+"ErrorBadPayload" = "Bad payload received from the server";
+"ErrorParse" = "Error in parsing response data";
+"ErrorUnknown" = "Unknown error";
+"ErrorTitle" = "Error";
+"ErrorOkButton" = "Ok";
